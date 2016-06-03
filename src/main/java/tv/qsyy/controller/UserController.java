@@ -21,6 +21,29 @@ public class UserController {
     @Resource
     private IUserService userService;
 
+
+    @RequestMapping(value = "/index")
+    private ModelAndView home(HttpServletRequest request) {
+        Map map = new HashMap();
+        User user = new User("赵", "");
+        map.put("user", user);
+        if ("top".equals(request.getParameter("m")))
+            return new ModelAndView("home/top", map);
+        else if ("left".equals(request.getParameter("m")))
+            return new ModelAndView("home/left", map);
+        else if ("middle".equals(request.getParameter("m")))
+            return new ModelAndView("home/frame", map);
+        return new ModelAndView("home/home");
+    }
+
+    @RequestMapping(value = "/frame")
+    private ModelAndView frame() {
+        Map map = new HashMap();
+        User user = new User("赵", "");
+        map.put("user", user);
+        return new ModelAndView("home/frame", map);
+    }
+
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     private ModelAndView login(HttpServletRequest request) {
         String username = request.getParameter("username");
@@ -35,4 +58,5 @@ public class UserController {
         }
         return new ModelAndView();
     }
+
 }
